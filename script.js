@@ -13,13 +13,13 @@ document.querySelectorAll('[data-rv]').forEach(el => io.observe(el));
 const stage = document.getElementById('top');
 const btns = [...document.querySelectorAll('.gbtn')];
 
-// 初期配置（画面幅で切り替え）
+// 初期配置（画面幅で切り替え、6ボタン対応）
 function layout() {
   const w = stage.clientWidth, h = stage.clientHeight;
   const wide = w > 760;
   const pos = wide
-    ? [[12, 26], [68, 20], [20, 68], [72, 64], [44, 80]]
-    : [[8, 20], [52, 16], [10, 72], [54, 68], [30, 86]];
+    ? [[10, 24], [66, 18], [18, 66], [72, 62], [42, 82], [82, 78]]
+    : [[6, 18], [50, 14], [8, 68], [52, 64], [28, 84], [70, 88]];
   btns.forEach((b, i) => {
     if (b.dataset.moved) return; // 一度動かしたボタンは動かさない
     const [px, py] = pos[i];
@@ -55,9 +55,14 @@ btns.forEach(b => {
     if (moved) {
       b.dataset.moved = '1';
     } else {
-      // 動かさずにクリックした場合はセクションへスクロール
-      const t = document.getElementById(b.dataset.go);
-      if (t) t.scrollIntoView({ behavior: 'smooth' });
+      const target = b.dataset.go;
+      // .html を含んでいたら別ページへ遷移、それ以外はセクションへスクロール
+      if (target.includes('.html')) {
+        window.location.href = target;
+      } else {
+        const t = document.getElementById(target);
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     active = null;
   };
@@ -94,46 +99,3 @@ window.resetForm = () => {
   document.getElementById('done').classList.remove('show');
   form.style.display = 'block';
 };
-
-// ===== SHOWCASE 浮遊ボタン =====
-(function(){
-  const stage2 = document.getElementById('showcaseStage');
-  if (!stage2) return;
-  const btn = stage2.querySelector('.gbtn2');
-  if (!btn) return;
-
-  let active = false, sx, sy, ox, oy, moved = false;
-
-  btn.addEventListener('pointerdown', e => {
-    active = true; moved = false;
-    sx = e.clientX; sy = e.clientY;
-    const r = btn.getBoundingClientRect(), sr = stage2.getBoundingClientRect();
-    if (!btn.dataset.pinned) {
-      btn.style.transform = 'rotate(-1.2deg)';
-      btn.style.left = (r.left - sr.left) + 'px';
-      btn.style.top  = (r.top  - sr.top)  + 'px';
-      btn.dataset.pinned = '1';
-    }
-    ox = btn.offsetLeft; oy = btn.offsetTop;
-    btn.setPointerCapture(e.pointerId);
-    btn.classList.add('grabbed');
-  });
-  btn.addEventListener('pointermove', e => {
-    if (!active) return;
-    const dx = e.clientX - sx, dy = e.clientY - sy;
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) moved = true;
-    const sr = stage2.getBoundingClientRect();
-    let nx = ox + dx, ny = oy + dy;
-    nx = Math.max(4, Math.min(nx, sr.width  - btn.offsetWidth  - 4));
-    ny = Math.max(4, Math.min(ny, sr.height - btn.offsetHeight - 4));
-    btn.style.left = nx + 'px'; btn.style.top = ny + 'px';
-  });
-  const end = () => {
-    if (!active) return;
-    btn.classList.remove('grabbed');
-    if (!moved) window.location.href = btn.dataset.go;
-    active = false;
-  };
-  btn.addEventListener('pointerup', end);
-  btn.addEventListener('pointercancel', end);
-})();
