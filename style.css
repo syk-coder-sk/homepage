@@ -131,6 +131,28 @@ section.blk{padding:100px 0;position:relative}
   .portfolio-cta{flex-direction:column;align-items:flex-start;gap:14px}
 }
 
+/* ===== 浮遊するSHOWCASEボタン ===== */
+.showcase-stage{
+  position:relative;min-height:220px;margin-top:22px;
+  background:radial-gradient(120% 90% at 50% 50%,#dbe8fb,#eef3fb 70%);
+  border:2px dashed var(--line);overflow:hidden;
+}
+.showcase-hint{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  font-family:var(--px);font-size:.48rem;color:var(--soft);letter-spacing:.05em;
+  pointer-events:none;white-space:nowrap;
+}
+.gbtn2{
+  position:absolute;z-index:5;font-family:var(--px);font-size:.6rem;color:#fff;
+  padding:15px 16px;cursor:grab;user-select:none;touch-action:none;letter-spacing:.03em;line-height:1.6;
+  border:3px solid var(--ink);white-space:nowrap;transition:filter .1s;
+  filter:drop-shadow(4px 4px 0 var(--sh));animation:wig 3s ease-in-out infinite;
+  background:var(--blue);left:50%;top:50%;transform:translate(-50%,-50%) rotate(-1.2deg);
+}
+.gbtn2 .jp{display:block;font-family:var(--jp);font-weight:900;font-size:.82rem;margin-top:6px;letter-spacing:0}
+.gbtn2:active{cursor:grabbing}
+.gbtn2.grabbed{filter:drop-shadow(8px 8px 0 var(--sh));animation:none;z-index:60}
+
 /* ===== 実績ページ（portfolio.html） ===== */
 .pf-hero{padding:130px 0 50px;text-align:center}
 .pf-hero .kkick{justify-content:center}
@@ -222,4 +244,7 @@ footer .cr{font-family:var(--px);font-size:.48rem;color:#8ea3cd;margin-top:18px;
   section.blk{padding:72px 0}
   .pf-grid{grid-template-columns:1fr}
   .pf-hero{padding:100px 0 40px}
+  .showcase-stage{min-height:180px}
+  .gbtn2{font-size:.52rem;padding:12px 12px}
+  .gbtn2 .jp{font-size:.74rem}
 }
