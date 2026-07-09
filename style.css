@@ -256,3 +256,20 @@ footer .cr{font-family:var(--px);font-size:.48rem;color:#8ea3cd;margin-top:18px;
   .pf-grid{grid-template-columns:1fr}
   .pf-hero{padding:100px 0 40px}
 }
+
+/* ===== 法的文書ページ（privacy.html） ===== */
+.legal-panel{padding:36px 34px}
+.legal-item{margin-bottom:32px}
+.legal-item:last-of-type{margin-bottom:0}
+.legal-item h2{font-family:var(--px);font-size:.66rem;color:var(--navy);line-height:1.7;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+.legal-item p{font-size:.9rem;color:var(--text);margin-bottom:10px}
+.legal-item p:last-child{margin-bottom:0}
+.legal-item ul{margin:0 0 10px 0;padding-left:1.3em;font-size:.9rem;color:var(--text)}
+.legal-item ul li{margin-bottom:6px}
+.legal-contact{margin-top:14px;padding:16px 18px;background:var(--bg2);border-left:3px solid var(--blue)}
+.legal-contact .cline:last-child{margin-bottom:0}
+.legal-date{text-align:right;font-size:.8rem;color:var(--soft);margin-top:8px}
+
+@media(max-width:560px){
+  .legal-panel{padding:26px 22px}
+}
